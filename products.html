@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="landing.html">Landing</a></li>
+                <li><a href="products.html">Products</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--A <main> section containing a grid of products.-->
+    <main>
+        <!--Each product inside an <article> with an image, price, and "View Details" link that links to the product detail page.-->
+        <article>
+            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
+            <p><b>₱ 67</b></p>
+            <a href="detail.html">View Details</a>
+        </article>
+
+        <article>
+            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
+            <p><b>₱ 69</b></p>
+            <a href="">View Details</a>
+        </article>
+
+        <article>
+            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
+            <p><b>₱ 420</b></p>
+            <a href="">View Details</a>
+        </article>
+
+        <!--An <aside> containing a filter form with checkbox and radio buttons.-->
+        <aside>
+            <p><b>Filter Items:</b></p>
+            <form action="">
+                <div>
+                    <input type="checkbox" id="checkbox_filter">
+                    <label for="checkbox_filter">Checkbox</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio_filter" name="radio_button">
+                    <label for="radio_filter">Radio</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="radio_filter2" name="radio_button">
+                    <label for="radio_filter2">Radio 2</label>
+                </div>
+            </form>
+        </aside>
+    </main>
+</body>
+</html>
