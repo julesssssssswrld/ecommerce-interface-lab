@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - NiggsShop</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>NiggsShop</h1>
+        <nav>
+            <ul>
+                <li><a href="landing.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="account.html">My Account</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        <h2>Checkout</h2>
+
+        <section>
+            <h3>Shipping Information</h3>
+            <form>
+                <fieldset>
+                    <legend>Shipping Address</legend>
+                    <label>Full Name: <br><input type="text" name="fullname" required></label><br><br>
+                    <label>Street Address: <br><input type="text" name="street" required></label><br><br>
+                    <label>City: <br><input type="text" name="city" required></label><br><br>
+                    <label>Zip Code: <br><input type="text" name="zip" required></label><br><br>
+                </fieldset>
+            </form>
+        </section>
+
+        <hr>
+
+        <section>
+            <h3>Payment Method</h3>
+            <form>
+                <label><input type="radio" name="payment" value="gcash" checked> GCash</label><br>
+                <label><input type="radio" name="payment" value="cod"> Cash on Delivery</label><br>
+                <label><input type="radio" name="payment" value="creditcard"> Credit Card</label><br>
+                <label><input type="radio" name="payment" value="paypal"> PayPal</label><br><br>
+            </form>
+        </section>
+
+        <hr>
+
+        <aside>
+            <h3>Order Summary</h3>
+            <p>Apple Airpods Pro 2 x1 - ₱10,990</p>
+            <p>Apple Watch (Cherry Ultra Edition) x1 - ₱69,420</p>
+            <p>Phone Case x2 - ₱298</p>
+            <hr>
+            <p>Subtotal: ₱80,708</p>
+            <p>Shipping: ₱150</p>
+            <p><b>Total: ₱80,858</b></p>
+            <br>
+            <button type="submit">Place Order</button>
+        </aside>
+
+    </main>
+
+</body>
+
+</html>

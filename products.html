@@ -1,62 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Products - NiggsShop</title>
 </head>
+
 <body>
+
     <header>
+        <h1>NiggsShop</h1>
         <nav>
             <ul>
-                <li><a href="landing.html">Landing</a></li>
+                <li><a href="landing.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="account.html">My Account</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </nav>
     </header>
 
-    <!--A <main> section containing a grid of products.-->
+    <hr>
+
     <main>
-        <!--Each product inside an <article> with an image, price, and "View Details" link that links to the product detail page.-->
-        <article>
-            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
-            <p><b>₱ 67</b></p>
-            <a href="detail.html">View Details</a>
-        </article>
+        <h2>All Products</h2>
 
-        <article>
-            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
-            <p><b>₱ 69</b></p>
-            <a href="">View Details</a>
-        </article>
+        <div>
+            <article>
+                <img src="" alt="Airpods">
+                <h3>Apple Airpods Pro 2</h3>
+                <p>₱10,990</p>
+                <a href="detail.html">View Details</a>
+            </article>
 
-        <article>
-            <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
-            <p><b>₱ 420</b></p>
-            <a href="">View Details</a>
-        </article>
+            <article>
+                <img src="" alt="Apple Watch">
+                <h3>Apple Watch (Cherry Ultra Edition)</h3>
+                <p>₱69,420</p>
+                <a href="detail.html">View Details</a>
+            </article>
 
-        <!--An <aside> containing a filter form with checkbox and radio buttons.-->
-        <aside>
-            <p><b>Filter Items:</b></p>
-            <form action="">
-                <div>
-                    <input type="checkbox" id="checkbox_filter">
-                    <label for="checkbox_filter">Checkbox</label>
-                </div>
+            <article>
+                <img src="" alt="Macbook">
+                <h3>Macbook ni Kent</h3>
+                <p>₱25,990</p>
+                <a href="detail.html">View Details</a>
+            </article>
 
-                <div>
-                    <input type="radio" id="radio_filter" name="radio_button">
-                    <label for="radio_filter">Radio</label>
-                </div>
+            <article>
+                <img src="" alt="Bag">
+                <h3>Laptop Backpack</h3>
+                <p>₱459</p>
+                <a href="detail.html">View Details</a>
+            </article>
 
-                <div>
-                    <input type="radio" id="radio_filter2" name="radio_button">
-                    <label for="radio_filter2">Radio 2</label>
-                </div>
-            </form>
-        </aside>
+            <article>
+                <img src="" alt="Case">
+                <h3>Phone Case</h3>
+                <p>₱149</p>
+                <a href="detail.html">View Details</a>
+            </article>
+
+            <article>
+                <img src="" alt="Speaker">
+                <h3>JBL Flip 6</h3>
+                <p>₱5,499</p>
+                <a href="detail.html">View Details</a>
+            </article>
+        </div>
     </main>
+
+    <hr>
+
+    <aside>
+        <h3>Filters</h3>
+        <form>
+            <fieldset>
+                <legend>Category</legend>
+                <label><input type="checkbox" name="category" value="electronics"> Electronics</label><br>
+                <label><input type="checkbox" name="category" value="accessories"> Accessories</label><br>
+                <label><input type="checkbox" name="category" value="gadgets"> Gadgets</label><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Price Range</legend>
+                <label><input type="radio" name="price" value="under500"> Under ₱500</label><br>
+                <label><input type="radio" name="price" value="500to5000"> ₱500 - ₱5,000</label><br>
+                <label><input type="radio" name="price" value="5000to25000"> ₱5,000 - ₱25,000</label><br>
+                <label><input type="radio" name="price" value="over25000"> Over ₱25,000</label><br>
+            </fieldset>
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </aside>
+
 </body>
+
 </html>

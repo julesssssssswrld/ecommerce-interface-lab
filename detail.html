@@ -1,52 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Apple Airpods Pro 2 - NiggsShop</title>
+    <style>
+        table,
+        td {
+            border: solid black 1px;
+            padding: 0.25rem;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Amba Shirt 1</h1>
-    <img src="./Assets/il_340x270.5016550547_oj5s.jpg" alt="">
 
-    <!--A <table> for technical specs/details.-->
-    <table>
-        <tr>
-            <th>Brand:</th>
-            <td>Amba Clothing Ltd.</td>
-        </tr>
-        <tr>
-            <th>Material:</th>
-            <td>67% Cotonton</td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>33% Polycarbonate</td>
-        </tr>
-    </table>
+    <header>
+        <h1>NiggsShop</h1>
+        <nav>
+            <ul>
+                <li><a href="landing.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="account.html">My Account</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!--A <form> to select quantity and "Add to Cart".-->
-    <form action="">
-        <input type="number" value="1">
-        <button>Add to Cart</button>
-    </form>
+    <hr>
 
-    <!--A <section> for user reviews using <blockquote> or <article>.-->
+    <main>
+        <h2>Apple Airpods Pro 2</h2>
+        <img src="" alt="Airpods">
+        <p>Premium noise cancelling earbuds. Sounds really good trust me bro.</p>
+        <p><b>Price: ₱10,990</b></p>
+
+        <h3>Specs</h3>
+        <table>
+            <tr>
+                <td>Brand</td>
+                <td>Apple</td>
+            </tr>
+            <tr>
+                <td>Battery Life</td>
+                <td>6 hours (30 hrs with case)</td>
+            </tr>
+            <tr>
+                <td>Connectivity</td>
+                <td>Bluetooth (Jovan's Version)</td>
+            </tr>
+            <tr>
+                <td>Weight</td>
+                <td>6.7g per earbud</td>
+            </tr>
+            <tr>
+                <td>Color</td>
+                <td>White</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>Purchase</h3>
+        <form>
+            <label>Quantity: <input type="number" name="quantity" value="1" min="1"></label>
+            <br><br>
+            <button type="submit">Add to Cart</button>
+        </form>
+    </main>
+
+    <hr>
+
     <section>
-        <h2>User reviews</h2>
-        <div>
-            <p><b>Dreamy</b></p>
-            <blockquote><q>Omaygot</q></blockquote>
-        </div>
-        <div>
-            <p><b>King</b></p>
-            <blockquote><q>Yes king</q></blockquote>
-        </div>
-        <div>
-            <p><b>Victor</b></p>
-            <blockquote><q>Good Amba Shirtt</q></blockquote>
-        </div>
+        <h3>Reviews</h3>
+
+        <article>
+            <h4>Sobrang ganda!</h4>
+            <p>by Kent DihLeon</p>
+            <blockquote>
+                Best earbuds I ever had. Noise cancelling is insane, di ko marinig yung prof ko sa class.
+            </blockquote>
+        </article>
+
+        <article>
+            <h4>Worth it naman</h4>
+            <p>by Keniel DihAsis</p>
+            <blockquote>
+                Mahal pero sulit. Gamit ko everyday pag commute. Bass is nice.
+            </blockquote>
+        </article>
+
+        <article>
+            <h4>Solid!</h4>
+            <p>by Jovan UghTencio</p>
+            <blockquote>
+                Bought this from NiggsShop legit naman. Fast delivery pa. 10/10
+            </blockquote>
+        </article>
     </section>
+
 </body>
+
 </html>

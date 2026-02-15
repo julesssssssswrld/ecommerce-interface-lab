@@ -1,11 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
+    <title>Shopping Cart - NiggsShop</title>
 </head>
+
 <body>
-    
+
+    <header>
+        <h1>NiggsShop</h1>
+        <nav>
+            <ul>
+                <li><a href="landing.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="account.html">My Account</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        <h2>Cart</h2>
+
+        <ul>
+            <li>
+                <img src="" alt="Airpods">
+                <h3>Apple Airpods Pro 2</h3>
+                <p>₱10,990</p>
+                <label>Qty: <input type="number" value="1" min="1"></label>
+            </li>
+            <li>
+                <img src="" alt="Apple Watch">
+                <h3>Apple Watch (Cherry Ultra Edition)</h3>
+                <p>₱69,420</p>
+                <label>Qty: <input type="number" value="1" min="1"></label>
+            </li>
+            <li>
+                <img src="" alt="Case">
+                <h3>Phone Case</h3>
+                <p>₱149</p>
+                <label>Qty: <input type="number" value="2" min="1"></label>
+            </li>
+        </ul>
+
+        <hr>
+
+        <section>
+            <h3>Order Summary</h3>
+            <p>Subtotal: ₱80,708</p>
+            <p>Shipping: ₱150</p>
+            <p><b>Total: ₱80,858</b></p>
+            <a href="checkout.html"><button>Proceed to Checkout</button></a>
+        </section>
+
+        <section>
+            <p><em>Your cart is empty! <a href="products.html">Browse products</a> to add items.</em></p>
+        </section>
+
+    </main>
+
 </body>
+
 </html>
