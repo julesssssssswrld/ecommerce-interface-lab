@@ -1,0 +1,418 @@
+/* task 1: css variables */
+:root {
+    --primary-color: rgba(0, 0, 0, 0.75);
+    --accent-color: #17376E;
+    --bg-light: #F7F7F7;
+    --text-color: rgba(0, 0, 0, 0.75);
+    --text-light: rgba(0, 0, 0, 0.25);
+    --white: #FFFFFF;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --success-color: #27AE60;
+    --warning-color: #fd5050;
+}
+
+/* task 1: global reset & base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    padding: 1.25rem;
+    line-height: 1.6;
+}
+
+/* task 1: typography */
+h1 {
+    font-weight: 800;
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+h2 {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.15rem;
+}
+
+h4 {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+p {
+    color: var(--text-color);
+}
+
+/* task 1: links & navigation */
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.25rem 0;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+header {
+    padding: 0.5rem 0;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* task 1: images, buttons & form elements */
+
+img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 5px;
+    background-color: var(--border-color);
+    display: block;
+}
+
+.cart_img {
+    max-width: 20rem;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #3168c7;
+    box-shadow: 5px 5px 25px -8px rgba(0, 0, 0, 0.35);
+    color: var(--white);
+}
+
+fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+}
+
+legend {
+    font-weight: 700;
+    color: var(--primary-color);
+    padding: 0 0.5rem;
+}
+
+label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background-color: var(--white);
+    transition: border-color 0.3s ease;
+}
+
+section,
+aside,
+main {
+    padding: 0.25rem 0;
+}
+
+dl {
+    padding: 0.5rem 1rem;
+    background-color: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+dt {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 0.5rem;
+}
+
+dd {
+    margin-left: 1rem;
+    color: var(--text-light);
+}
+
+details {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background-color: var(--white);
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+}
+
+summary {
+    font-weight: 600;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.25rem 0;
+    transition: color 0.3s ease;
+}
+
+/* task 2: interactive states & transitions */
+
+a:hover {
+    color: var(--primary-color);
+}
+
+button:hover {
+    background-color: #3168c7;
+    box-shadow: 5px 5px 25px -8px rgba(0, 0, 0, 0.35);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+button:focus {
+    outline: 3px solid var(--warning-color);
+    outline-offset: 2px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+summary:hover {
+    color: var(--accent-color);
+}
+
+/* task 3: product list styling */
+
+article {
+    display: inline-block;
+    width: 15.5rem;
+    height: 17rem;
+    vertical-align: top;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--white);
+    padding: 1rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+    transition: box-shadow 0.3s ease;
+}
+
+article:hover {
+    box-shadow: 5px 5px 25px -8px rgba(0, 0, 0, 0.3);
+}
+
+article:nth-child(odd) {
+    background-color: var(--white);
+}
+
+article:nth-child(even) {
+    background-color: #FDFDFD;
+}
+
+/* task 4: advanced selectors & pseudo-elements */
+
+.empty-cart:empty {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+    background-color: var(--white);
+}
+
+.empty-cart:empty::after {
+    content: "Your cart is empty! Browse products to add items.";
+}
+
+.price {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: 1.05rem;
+}
+
+.price::before {
+    content: "₱ ";
+    font-size: 0.9rem;
+}
+
+input:required {
+    border-left: 3px solid var(--warning-color);
+}
+
+input:valid {
+    border-left: 3px solid var(--success-color);
+}
+
+input:invalid:focus {
+    border-color: var(--accent-color);
+    border-left: 3px solid var(--accent-color);
+}
+
+/* task 5: detailed data styling */
+
+table {
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    background-color: var(--white);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+table td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+table td:first-child {
+    font-weight: 700;
+    color: var(--primary-color);
+    background-color: #F0F0F0;
+}
+
+blockquote {
+    position: relative;
+    margin: 0.5rem 0;
+    padding: 1rem 1.5rem;
+    font-style: italic;
+    color: var(--text-color);
+    background-color: #FAFAFA;
+    border-radius: 0 8px 8px 0;
+}
+
+blockquote::before {
+    content: "\201C";
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.3;
+}
+
+blockquote::after {
+    content: "\201D";
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
+    opacity: 0.3;
+}
+
+blockquote::first-letter {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-style: normal;
+}
+
+li::marker {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+#orders ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+
+#orders li {
+    padding: 0.25rem 0;
+}
+
+/* misc: styles ni jols */
+
+#current_page {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+nav a:hover {
+    background-color: var(--bg-light);
+    border-bottom: 2px solid var(--accent-color);
+    transition: 0.3s ease;
+}
+
+#wishlist ul {
+    list-style: square;
+    padding-left: 1.5rem;
+}
+
+#wishlist li {
+    padding: 0.25rem 0;
+    color: var(--text-color);
+}
