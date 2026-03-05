@@ -11,7 +11,7 @@
     --warning-color: #fd5050;
 }
 
-/* task 1: global reset & base styles */
+/* task 1: global reset & base styles (mobile-first, 0px to 480px) */
 * {
     margin: 0;
     padding: 0;
@@ -71,17 +71,26 @@ a {
     transition: color 0.3s ease;
 }
 
+/* task 2: header & nav flexbox (mobile - stacked vertically) */
 header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 0.5rem 0;
+    text-align: center;
 }
 
 nav ul {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
 }
 
 nav ul li {
-    display: inline-block;
-    margin-right: 1rem;
+    margin-right: 0;
 }
 
 nav ul li a {
@@ -93,10 +102,9 @@ nav ul li a {
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-/* task 1: images, buttons & form elements */
-
+/* task 5: fluid images (max-width: 100% and height: auto) */
 img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
     aspect-ratio: 16/9;
     object-fit: cover;
@@ -109,6 +117,7 @@ img {
     max-width: 20rem;
 }
 
+/* task 1: buttons & form elements */
 button {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--accent-color);
@@ -176,6 +185,8 @@ input[type="number"] {
     color: var(--text-color);
     background-color: var(--white);
     transition: border-color 0.3s ease;
+    width: 100%;
+    max-width: 100%;
 }
 
 section,
@@ -251,20 +262,22 @@ summary:hover {
     color: var(--accent-color);
 }
 
-/* task 3: product list styling */
+/* task 3: product grid (mobile - single column with css grid) */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
 
 article {
-    display: inline-block;
-    width: 15.5rem;
-    height: 17rem;
-    vertical-align: top;
     border: 1px solid var(--border-color);
     border-radius: 10px;
     background-color: var(--white);
     padding: 1rem;
-    margin: 0.5rem 0.5rem 0.5rem 0;
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
     transition: box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 article:hover {
@@ -327,6 +340,7 @@ table {
     background-color: var(--white);
     border-radius: 6px;
     overflow: hidden;
+    width: 100%;
 }
 
 table td {
@@ -339,6 +353,13 @@ table td:first-child {
     font-weight: 700;
     color: var(--primary-color);
     background-color: #F0F0F0;
+}
+
+/* task 5: responsive table wrapper (prevents horizontal scrolling on mobile) */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0.5rem 0;
 }
 
 blockquote {
@@ -416,3 +437,111 @@ nav a:hover {
     padding: 0.25rem 0;
     color: var(--text-color);
 }
+
+/* task 4: hero section flexbox (mobile - centered content) */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 40vh;
+    padding: 2rem 1rem;
+}
+
+.hero h1 {
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+.hero p {
+    animation: slideIn 0.6s ease-out 0.15s forwards;
+    opacity: 0;
+}
+
+.hero button {
+    animation: slideIn 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+    margin-top: 1rem;
+}
+
+/* task 4: cart item card design (mobile - stacked vertically) */
+.cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.cart-item .cart_img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* task 6: products page sidebar layout (mobile - aside above main) */
+.products-layout {
+    display: block;
+}
+
+/* task 7: @keyframes animations */
+
+/* fade-in effect for product cards as the page loads */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* slide-in effect for the hero text on the landing page */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* pulse animation for the add to cart button on hover */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* task 7: apply pulse animation to add to cart button on hover */
+.add-to-cart-btn:hover {
+    animation: pulse 0.4s ease-in-out;
+}
+
+/* stagger fade-in animation for each product card */
+article:nth-child(1) { animation-delay: 0s; }
+article:nth-child(2) { animation-delay: 0.1s; }
+article:nth-child(3) { animation-delay: 0.2s; }
+article:nth-child(4) { animation-delay: 0.3s; }
+article:nth-child(5) { animation-delay: 0.4s; }
+article:nth-child(6) { animation-delay: 0.5s; }
