@@ -1,0 +1,69 @@
+/* task 1: desktop breakpoint (min-width: 769px to 1280px) */
+@media (min-width: 769px) {
+
+    /* task 2: header & nav flexbox (desktop - logo left, nav right) */
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-top: 0;
+    }
+
+    /* task 3: product grid (desktop - 4 columns using repeat() and minmax()) */
+    .product-grid {
+        grid-template-columns: repeat(4, minmax(150px, 1fr));
+    }
+
+    /* task 4: cart items (desktop - refined horizontal layout) */
+    .cart-item {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        gap: 1.25rem;
+    }
+
+    .cart-item .cart_img {
+        max-width: 10rem;
+    }
+
+    /* task 4: checkout layout (desktop - shipping and order summary side-by-side) */
+    .checkout-layout {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+
+    .checkout-layout section {
+        flex: 2;
+    }
+
+    .checkout-layout aside {
+        flex: 1;
+        position: sticky;
+        top: 1rem;
+        background-color: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+        box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.25);
+    }
+
+    /* task 4: hero section (desktop - larger view) */
+    .hero {
+        min-height: 50vh;
+        padding: 3rem 2rem;
+    }
+
+    /* task 6: products page sidebar layout (desktop - aside 20-25%, main the rest) */
+    .products-layout {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+}
