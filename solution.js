@@ -1,10 +1,8 @@
-function generateIDs(count) {
-    const ids = [];
-    for (let i = 0; i < count; i++) {
-        if (i === 5) {
-            continue;
+function calculateTotal(...numbers) {
+    return numbers.reduce((total, current) => {
+        if (typeof current !== 'number') {
+            throw new TypeError("Invalid input: All arguments must be numbers");
         }
-        ids.push(`ID-${i}`);
-    }
-    return ids;
+        return total + current;
+    }, 0);
 }
