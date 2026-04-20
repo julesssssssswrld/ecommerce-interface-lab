@@ -25,37 +25,60 @@ const products = [
 
 // Task 2
 
+// helper function to create a product card using createElement, createTextNode, appendChild
+function createProductCard(product) {
+    const article = document.createElement('article');
+    
+    const img = document.createElement('img');
+    img.setAttribute('src', product.image);
+    img.setAttribute('alt', product.name);
+    
+    const h3 = document.createElement('h3');
+    const titleText = document.createTextNode(product.name);
+    h3.appendChild(titleText);
+    
+    const p = document.createElement('p');
+    const priceText = document.createTextNode(`Price: ₱${product.price}`);
+    p.appendChild(priceText);
+    
+    const btn = document.createElement('button');
+    const btnText = document.createTextNode('Add to Cart');
+    btn.appendChild(btnText);
+    btn.setAttribute('data-id', product.id);
+    
+    article.appendChild(img);
+    article.appendChild(h3);
+    article.appendChild(p);
+    article.appendChild(btn);
+    
+    return article;
+}
+
+// render all products on products.html
 const productGrid = document.querySelector('.product-grid');
 
 if (productGrid) {
     products.forEach(product => {
-        const article = document.createElement('article');
-        
-        const img = document.createElement('img');
-        img.setAttribute('src', product.image);
-        img.setAttribute('alt', product.name);
-        
-        const h3 = document.createElement('h3');
-        const titleText = document.createTextNode(product.name);
-        h3.appendChild(titleText);
-        
-        const p = document.createElement('p');
-        const priceText = document.createTextNode(`Price: ₱${product.price}`);
-        p.appendChild(priceText);
-        
-        const btn = document.createElement('button');
-        const btnText = document.createTextNode('Add to Cart');
-        btn.appendChild(btnText);
-        btn.setAttribute('data-id', product.id);
-        
-        article.appendChild(img);
-        article.appendChild(h3);
-        article.appendChild(p);
-        article.appendChild(btn);
-        
-        productGrid.appendChild(article);
+        productGrid.appendChild(createProductCard(product));
     });
 }
+
+// render featured products on landing.html (filter electronics category)
+const featuredGrid = document.getElementById('featured-grid');
+if (featuredGrid) {
+    products.filter(p => p.category === 'electronics').forEach(product => {
+        featuredGrid.appendChild(createProductCard(product));
+    });
+}
+
+// render discounted products on landing.html (filter accessories under ₱500)
+const discountedGrid = document.getElementById('discounted-grid');
+if (discountedGrid) {
+    products.filter(p => p.category === 'accessories' && p.price < 500).forEach(product => {
+        discountedGrid.appendChild(createProductCard(product));
+    });
+}
+
 
 // Task 3
 
@@ -74,8 +97,16 @@ document.body.addEventListener('click', (event) => {
                 cart.push({ ...product, quantity: 1 });
             }
             alert(`Added ${product.name} to cart.`);
+
+            // Task 6:
+            const card = event.target.closest('article');
+            if (card) {
+                card.classList.add('fade-in');
+                setTimeout(() => {
+                    card.classList.remove('fade-in');
+                }, 400);
+            }
             
-            // Re-render cart if we are on the cart page
             if (document.querySelector('.cart-list')) {
                 renderCart();
             }
@@ -180,3 +211,86 @@ if (checkoutForm) {
     });
 }
 
+// Task 5
+const currentUser = {
+    name: "Jols",
+    orderHistory: [
+        {
+            id: 1001,
+            date: "January 15, 2026",
+            items: [{ name: "Apple Airpods Pro 2", quantity: 1 }],
+            total: 10990,
+            status: "Delivered"
+        },
+        {
+            id: 1002,
+            date: "February 3, 2026",
+            items: [{ name: "Apple Watch (Cherry Ultra Edition)", quantity: 1 }],
+            total: 69420,
+            status: "Shipped"
+        }
+    ]
+};
+
+const accountGreeting = document.getElementById('account-greeting');
+if (accountGreeting) {
+    accountGreeting.textContent = `Welcome, ${currentUser.name}`;
+}
+
+const ordersList = document.querySelector('#orders ul');
+if (ordersList) {
+    currentUser.orderHistory.forEach(order => {
+        const li = document.createElement('li');
+
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        const summaryText = document.createTextNode(`Order #${order.id} - ${order.date}`);
+        summary.appendChild(summaryText);
+        details.appendChild(summary);
+
+        summary.addEventListener('click', () => {
+            if (details.querySelector('dl')) return;
+
+            const dl = document.createElement('dl');
+
+            order.items.forEach(item => {
+                const dtItem = document.createElement('dt');
+                dtItem.appendChild(document.createTextNode('Item'));
+                dl.appendChild(dtItem);
+
+                const ddItem = document.createElement('dd');
+                ddItem.appendChild(document.createTextNode(item.name));
+                dl.appendChild(ddItem);
+
+                const dtQty = document.createElement('dt');
+                dtQty.appendChild(document.createTextNode('Quantity'));
+                dl.appendChild(dtQty);
+
+                const ddQty = document.createElement('dd');
+                ddQty.appendChild(document.createTextNode(item.quantity));
+                dl.appendChild(ddQty);
+            });
+
+            const dtTotal = document.createElement('dt');
+            dtTotal.appendChild(document.createTextNode('Total'));
+            dl.appendChild(dtTotal);
+
+            const ddTotal = document.createElement('dd');
+            ddTotal.appendChild(document.createTextNode(`₱${order.total.toLocaleString()}`));
+            dl.appendChild(ddTotal);
+
+            const dtStatus = document.createElement('dt');
+            dtStatus.appendChild(document.createTextNode('Status'));
+            dl.appendChild(dtStatus);
+
+            const ddStatus = document.createElement('dd');
+            ddStatus.appendChild(document.createTextNode(order.status));
+            dl.appendChild(ddStatus);
+
+            details.appendChild(dl);
+        });
+
+        li.appendChild(details);
+        ordersList.appendChild(li);
+    });
+}

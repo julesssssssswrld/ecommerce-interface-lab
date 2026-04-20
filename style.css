@@ -11,7 +11,7 @@
     --warning-color: #fd5050;
 }
 
-/* task 1: global reset & base styles (mobile-first, 0px to 480px) */
+/* task 1: global reset & base styles */
 * {
     margin: 0;
     padding: 0;
@@ -262,7 +262,20 @@ summary:hover {
     color: var(--accent-color);
 }
 
-/* task 3: product grid (mobile - single column with css grid) */
+/* lab 6: error class for form validation feedback */
+.error {
+    border-color: var(--warning-color) !important;
+    border-left: 3px solid var(--warning-color) !important;
+    background-color: #fff5f5;
+}
+
+/* lab 6: fade-in class for add-to-cart animation feedback */
+.fade-in {
+    animation: pulse 0.4s ease-in-out;
+    box-shadow: 0 0 15px rgba(23, 55, 110, 0.3);
+}
+
+/* task 3: product grid */
 
 .product-grid {
     display: grid;
@@ -355,7 +368,7 @@ table td:first-child {
     background-color: #F0F0F0;
 }
 
-/* task 5: responsive table wrapper (prevents horizontal scrolling on mobile) */
+/* task 5: responsive table wrapper */
 .table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -438,7 +451,7 @@ nav a:hover {
     color: var(--text-color);
 }
 
-/* task 4: hero section flexbox (mobile - centered content) */
+/* task 4: hero section flexbox */
 .hero {
     display: flex;
     flex-direction: column;
@@ -464,7 +477,7 @@ nav a:hover {
     margin-top: 1rem;
 }
 
-/* task 4: cart item card design (mobile - stacked vertically) */
+/* task 4: cart item card design */
 .cart-list {
     list-style: none;
     padding: 0;
@@ -489,7 +502,7 @@ nav a:hover {
     border-radius: 8px;
 }
 
-/* task 6: products page sidebar layout (mobile - aside above main) */
+/* task 6: products page sidebar layout */
 .products-layout {
     display: block;
 }
