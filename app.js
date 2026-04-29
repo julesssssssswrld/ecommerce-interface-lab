@@ -26,7 +26,9 @@ const API_BASE_URL = 'http://localhost:8080/api/v1';
  */
 async function fetchProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/products`);
+        const response = await fetch(`${API_BASE_URL}/products`, {
+            credentials: 'include'
+        });
 
         // Check if the response status is in the 200-299 range.
         // Fetch only rejects on network errors, NOT on HTTP errors like 404 or 500.
