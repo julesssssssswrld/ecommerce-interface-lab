@@ -74,8 +74,17 @@
 
         </div>
 
-    </main>
-
-</body>
+        <script src=\"auth.js\"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            updateNavAuth();
+        });
+    </script>
 
 </html>
+

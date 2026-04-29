@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NiggsShop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tablet.css">
+    <link rel="stylesheet" href="desktop.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>NiggsShop</h1>
+        <nav>
+            <ul>
+                <li><a href="landing.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html" id="current_page">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        <h2>Login</h2>
+        <form id="login-form">
+            <label>Username:<br><input type="text" id="username" name="username" required></label><br><br>
+            <label>Password:<br><input type="password" id="password" name="password" required></label><br><br>
+            <button type="submit">Login</button>
+        </form>
+        <div id="login-error" style="display:none;color:#b00020;margin-top:1rem;">Invalid username or password</div>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    </main>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavAuth();
+            document.getElementById('login-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                document.getElementById('login-error').style.display = 'none';
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const response = await loginUser(username, password);
+
+                if (response.ok || response.status === 302) {
+                    window.location.href = 'products.html';
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

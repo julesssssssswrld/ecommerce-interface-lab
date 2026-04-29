@@ -33,7 +33,9 @@
 
     <main>
         <header>
-            <h2>Welcome, mah nigg</h2>
+            <h2 id="account-welcome">Welcome, Guest</h2>
+            <p id="account-role" style="margin-top:0.25rem;color:#555;"></p>
+            <button id="logout-button" style="display:none;margin-top:1rem;">Logout</button>
             <nav>
                 <ul>
                     <li><a href="#orders">Order History</a></li>
@@ -101,8 +103,24 @@
                 <li>JBL Flip 6 - ₱5,499</li>
             </ul>
         </section>
-    </main>
-
-</body>
+        <script src=\"auth.js\"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            updateNavAuth();
+            document.getElementById('account-welcome').textContent = Welcome, ;
+            document.getElementById('account-role').textContent = Role: ;
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.style.display = 'inline-block';
+            logoutButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                logoutUser();
+            });
+        });
+    </script>
 
 </html>
