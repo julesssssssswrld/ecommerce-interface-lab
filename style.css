@@ -657,6 +657,126 @@ select:focus {
     background-color: var(--white);
 }
 
+/* ── Auth Card Layout (Login / Sign Up) ── */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    min-height: 60vh;
+}
+
+.auth-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 0.25rem;
+    color: var(--accent-color);
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1.75rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    background-color: var(--bg-primary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+    outline: none;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    margin-top: 0.5rem;
+}
+
+.auth-btn:hover {
+    background-color: #1a252f;
+    transform: translateY(-1px);
+}
+
+.auth-btn:active {
+    transform: translateY(0);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.auth-footer a {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* ── Wishlist Heart Button ── */
+.btn-wishlist {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: #e74c3c;
+    font-size: 1.2rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    box-shadow: none;
+}
+
+.btn-wishlist:hover {
+    background-color: #fde8e8;
+    transform: scale(1.1);
+    box-shadow: none;
+}
+
 /* ── Popover Toast Notifications ── */
 #toast-popover {
     position: fixed;

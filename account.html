@@ -40,6 +40,7 @@
                 <ul>
                     <li><a href="#orders">Order History</a></li>
                     <li><a href="#settings">Profile Settings</a></li>
+                    <li><a href="#wishlist">Wishlist</a></li>
                 </ul>
             </nav>
         </header>
@@ -48,9 +49,41 @@
 
         <section id="orders">
             <h3>Order History</h3>
-            <div id="order-list">
-                <p>Loading orders...</p>
-            </div>
+            <!-- Static proof-of-concept orders -->
+            <ul>
+                <li>
+                    <details>
+                        <summary>Order #1001 - January 15, 2026</summary>
+                        <dl>
+                            <dt>Item</dt>
+                            <dd>Apple Airpods Pro 2</dd>
+                            <dt>Quantity</dt>
+                            <dd>1</dd>
+                            <dt>Total</dt>
+                            <dd>₱10,990</dd>
+                            <dt>Status</dt>
+                            <dd>Delivered</dd>
+                        </dl>
+                    </details>
+                </li>
+                <li>
+                    <details>
+                        <summary>Order #1002 - February 3, 2026</summary>
+                        <dl>
+                            <dt>Item</dt>
+                            <dd>Apple Watch (Cherry Ultra Edition)</dd>
+                            <dt>Quantity</dt>
+                            <dd>1</dd>
+                            <dt>Total</dt>
+                            <dd>₱69,420</dd>
+                            <dt>Status</dt>
+                            <dd>Shipped</dd>
+                        </dl>
+                    </details>
+                </li>
+            </ul>
+            <!-- Dynamic orders loaded from the API -->
+            <div id="order-list"></div>
         </section>
 
         <hr>
@@ -62,66 +95,90 @@
                 <label>Role: <br><input type="text" id="profile-role" readonly></label><br><br>
             </form>
         </section>
+
+        <hr>
+
+        <section id="wishlist">
+            <h3>Wishlist</h3>
+            <div id="wishlist-items">
+                <p>Loading wishlist...</p>
+            </div>
+        </section>
     </main>
 
     <script src="auth.js"></script>
     <script>
+        const WISHLIST_API = `${API_BASE}/api/v1/wishlist`;
+
         document.addEventListener('DOMContentLoaded', async () => {
             const user = await requireAuth();
             if (!user) return;
             updateNavAuth();
 
-            // Welcome header with role badge
             document.getElementById('account-welcome').innerHTML =
                 `Welcome, ${user.username} <span class="role-badge">${user.role}</span>`;
-
-            // Profile settings — actual credentials
             document.getElementById('profile-username').value = user.username;
             document.getElementById('profile-role').value = user.role;
 
-            // Load order history from API
             loadOrders();
+            loadWishlist();
         });
 
         async function loadOrders() {
             const orderList = document.getElementById('order-list');
             try {
-                const response = await fetch(`${API_BASE}/api/v1/orders`, {
-                    credentials: 'include'
-                });
-                if (response.status === 403) {
-                    // Non-admin users can't list all orders — show a message
-                    orderList.innerHTML = '<p>No order history yet. Place an order from your <a href="cart.html">cart</a>!</p>';
-                    return;
-                }
-                if (!response.ok) {
-                    orderList.innerHTML = '<p>No order history yet.</p>';
+                const response = await fetch(`${API_BASE}/api/v1/orders`, { credentials: 'include' });
+                if (response.status === 403 || !response.ok) {
+                    orderList.innerHTML = '';
                     return;
                 }
                 const orders = await response.json();
-                if (orders.length === 0) {
-                    orderList.innerHTML = '<p>No order history yet. Place an order from your <a href="cart.html">cart</a>!</p>';
-                    return;
-                }
+                if (orders.length === 0) { orderList.innerHTML = ''; return; }
                 orderList.innerHTML = '<ul>' + orders.map(order => `
                     <li>
                         <details>
                             <summary>Order #${order.id} — ${new Date(order.orderDate).toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' })}</summary>
                             <dl>
-                                <dt>Customer</dt>
-                                <dd>${order.customerName}</dd>
-                                <dt>Email</dt>
-                                <dd>${order.customerEmail}</dd>
-                                <dt>Items</dt>
-                                <dd>${order.orderItems.map(i => `${i.product?.name || 'Product'} × ${i.quantity}`).join(', ')}</dd>
-                                <dt>Total</dt>
-                                <dd>₱${Number(order.totalAmount).toLocaleString('en-PH')}</dd>
+                                <dt>Customer</dt><dd>${order.customerName}</dd>
+                                <dt>Items</dt><dd>${order.orderItems.map(i => `${i.product?.name || 'Product'} × ${i.quantity}`).join(', ')}</dd>
+                                <dt>Total</dt><dd>₱${Number(order.totalAmount).toLocaleString('en-PH')}</dd>
                             </dl>
                         </details>
                     </li>
                 `).join('') + '</ul>';
+            } catch (e) { orderList.innerHTML = ''; }
+        }
+
+        async function loadWishlist() {
+            const container = document.getElementById('wishlist-items');
+            try {
+                const response = await authFetch(WISHLIST_API);
+                if (!response.ok) {
+                    container.innerHTML = '<p>Your wishlist is empty. Browse <a href="products.html">products</a> and click ♡ to add items!</p>';
+                    return;
+                }
+                const items = await response.json();
+                if (items.length === 0) {
+                    container.innerHTML = '<p>Your wishlist is empty. Browse <a href="products.html">products</a> and click ♡ to add items!</p>';
+                    return;
+                }
+                container.innerHTML = '<ul id="wishlist-ul">' + items.map(item => `
+                    <li>
+                        ${item.product.name} — <span class="price">${Number(item.product.price).toLocaleString('en-PH')}</span>
+                        <button class="btn-remove" onclick="removeWishlistItem(${item.id})">Remove</button>
+                    </li>
+                `).join('') + '</ul>';
             } catch (e) {
-                orderList.innerHTML = '<p>No order history yet.</p>';
+                container.innerHTML = '<p>Your wishlist is empty.</p>';
+            }
+        }
+
+        async function removeWishlistItem(itemId) {
+            await initCsrf();
+            const response = await authFetch(`${WISHLIST_API}/items/${itemId}`, { method: 'DELETE' });
+            if (response.ok || response.status === 204) {
+                showToast('Removed from wishlist.', 'info');
+                loadWishlist();
             }
         }
     </script>

@@ -32,15 +32,24 @@
 
     <hr>
 
-    <main>
-        <h2>Login</h2>
-        <form id="login-form">
-            <label>Username:<br><input type="text" id="username" name="username" required></label><br><br>
-            <label>Password:<br><input type="password" id="password" name="password" required></label><br><br>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
-    </main>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Sign in to your NiggsShop account</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-btn">Login</button>
+            </form>
+            <p class="auth-footer">Don't have an account? <a href="signup.html">Sign up here</a></p>
+        </div>
+    </div>
 
     <script src="auth.js"></script>
     <script>

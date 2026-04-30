@@ -98,6 +98,26 @@ function renderProducts(products) {
         addBtn.addEventListener('click', () => addToCart(product.id));
         article.querySelector('.product-actions').appendChild(addBtn);
 
+        // Wishlist button
+        const wishBtn = document.createElement('button');
+        wishBtn.className = 'btn btn-wishlist';
+        wishBtn.textContent = '♡';
+        wishBtn.title = 'Add to Wishlist';
+        wishBtn.addEventListener('click', async () => {
+            await initCsrf();
+            const response = await authFetch(`${API_BASE}/api/v1/wishlist/items`, {
+                method: 'POST',
+                body: JSON.stringify({ productId: product.id })
+            });
+            if (response.ok || response.status === 201) {
+                wishBtn.textContent = '♥';
+                showToast(`${product.name} added to wishlist!`, 'success');
+            } else {
+                await showResponseError(response, 'Could not add to wishlist.');
+            }
+        });
+        article.querySelector('.product-actions').appendChild(wishBtn);
+
         grid.appendChild(article);
     });
 }
