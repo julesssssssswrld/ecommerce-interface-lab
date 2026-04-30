@@ -53,7 +53,7 @@
                 const password = document.getElementById('password').value;
                 const response = await loginUser(username, password);
 
-                if (response.ok || response.status === 302) {
+                if (response.ok) {
                     window.location.href = 'products.html';
                 } else {
                     document.getElementById('login-error').style.display = 'block';
