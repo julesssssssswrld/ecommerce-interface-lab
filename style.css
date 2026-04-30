@@ -485,8 +485,12 @@ nav a:hover {
 }
 
 .cart-item .cart_img {
-    max-width: 100%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
     border-radius: 8px;
+    flex-shrink: 0;
+    background-color: var(--bg-primary);
 }
 
 /* task 6: products page sidebar layout (mobile - aside above main) */

@@ -39,42 +39,6 @@
         <!-- Dynamic cart items from the Cart API -->
         <ul class="cart-list" id="cart-items"></ul>
 
-        <!-- Static proof-of-concept items (HTML/CSS demo) -->
-        <ul class="cart-list" id="static-cart" style="display:none;">
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Airpods">
-                <div class="cart-item-info">
-                    <h3>Apple Airpods Pro 2</h3>
-                    <p class="price">10,990</p>
-                </div>
-                <div class="cart-item-actions">
-                    <label>Qty: <input type="number" value="1" min="1"></label>
-                </div>
-            </li>
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Apple Watch">
-                <div class="cart-item-info">
-                    <h3>Apple Watch (Cherry Ultra Edition)</h3>
-                    <p class="price">69,420</p>
-                </div>
-                <div class="cart-item-actions">
-                    <label>Qty: <input type="number" value="1" min="1"></label>
-                </div>
-            </li>
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Case">
-                <div class="cart-item-info">
-                    <h3>Phone Case</h3>
-                    <p class="price">149</p>
-                </div>
-                <div class="cart-item-actions">
-                    <label>Qty: <input type="number" value="2" min="1"></label>
-                </div>
-            </li>
-        </ul>
-
-        <section class="empty-cart" id="static-empty-cart"></section>
-
         <hr>
 
         <section id="cart-summary" style="display:none;">
@@ -98,11 +62,6 @@
             if (!user) return;
             updateNavAuth();
             await renderCartPage();
-            // Show static proof-of-concept items when dynamic cart is empty
-            const cart = await fetchCart();
-            const hasItems = (cart.items || []).length > 0;
-            document.getElementById('static-cart').style.display = hasItems ? 'none' : 'block';
-            document.getElementById('static-empty-cart').style.display = hasItems ? 'none' : 'block';
         });
     </script>
 

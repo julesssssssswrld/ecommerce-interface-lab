@@ -131,6 +131,7 @@ async function loginUser(username, password) {
 }
 
 async function logoutUser() {
+    await initCsrf();
     const csrfToken = getCsrfToken();
 
     await fetch(`${API_BASE}/logout`, {
