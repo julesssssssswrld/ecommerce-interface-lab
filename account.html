@@ -112,8 +112,8 @@
                 return;
             }
             updateNavAuth();
-            document.getElementById('account-welcome').textContent = Welcome, ;
-            document.getElementById('account-role').textContent = Role: ;
+            document.getElementById('account-welcome').textContent = `Welcome, ${user.username}`;
+            document.getElementById('account-role').textContent = `Role: ${user.role}`;
             const logoutButton = document.getElementById('logout-button');
             logoutButton.style.display = 'inline-block';
             logoutButton.addEventListener('click', (event) => {
