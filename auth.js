@@ -203,7 +203,7 @@ function ensureToastElement() {
     const toast = document.createElement('div');
     toast.id = 'toast-popover';
     toast.setAttribute('popover', 'manual');
-    toast.innerHTML = '<p id="toast-message"></p><button id="toast-close" onclick="this.parentElement.hidePopover()">✕</button>';
+    toast.innerHTML = '<p id="toast-message"></p>';
     document.body.appendChild(toast);
 }
 

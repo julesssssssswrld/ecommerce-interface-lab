@@ -828,24 +828,7 @@ select:focus {
     color: inherit;
 }
 
-#toast-close {
-    background: none;
-    border: none;
-    color: inherit;
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    box-shadow: none;
-    opacity: 0.8;
-    min-width: auto;
-}
 
-#toast-close:hover {
-    opacity: 1;
-    background: none;
-    box-shadow: none;
-}
 
 @keyframes toastSlideIn {
     from {
