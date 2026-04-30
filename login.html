@@ -21,9 +21,11 @@
             <ul>
                 <li><a href="landing.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
-                <li><a href="login.html" id="current_page">Login</a></li>
+                <li class="nav-auth"><a href="cart.html">Cart</a></li>
+                <li class="nav-auth"><a href="account.html">My Account</a></li>
+                <li class="nav-guest"><a href="signup.html">Sign Up</a></li>
+                <li class="nav-guest"><a href="login.html" id="current_page">Login</a></li>
+                <li class="nav-auth"><a href="#" id="nav-logout-link" onclick="logoutUser(); return false;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -37,7 +39,6 @@
             <label>Password:<br><input type="password" id="password" name="password" required></label><br><br>
             <button type="submit">Login</button>
         </form>
-        <div id="login-error" style="display:none;color:#b00020;margin-top:1rem;">Invalid username or password</div>
         <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
     </main>
 
@@ -47,16 +48,16 @@
             updateNavAuth();
             document.getElementById('login-form').addEventListener('submit', async (event) => {
                 event.preventDefault();
-                document.getElementById('login-error').style.display = 'none';
 
                 const username = document.getElementById('username').value.trim();
                 const password = document.getElementById('password').value;
                 const response = await loginUser(username, password);
 
                 if (response.ok) {
-                    window.location.href = 'products.html';
+                    showToast('Login successful! Redirecting...', 'success');
+                    setTimeout(() => { window.location.href = 'products.html'; }, 800);
                 } else {
-                    document.getElementById('login-error').style.display = 'block';
+                    showToast('Invalid username or password. Please try again.', 'error');
                 }
             });
         });

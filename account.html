@@ -22,9 +22,11 @@
             <ul>
                 <li><a href="landing.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
-                <li><a href="cart.html">Cart</a></li>
-                <li><a href="account.html" id="current_page">My Account</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
+                <li class="nav-auth"><a href="cart.html">Cart</a></li>
+                <li class="nav-auth"><a href="account.html" id="current_page">My Account</a></li>
+                <li class="nav-guest"><a href="signup.html">Sign Up</a></li>
+                <li class="nav-guest"><a href="login.html">Login</a></li>
+                <li class="nav-auth"><a href="#" id="nav-logout-link" onclick="logoutUser(); return false;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -35,7 +37,6 @@
         <header>
             <h2 id="account-welcome">Welcome, Guest</h2>
             <p id="account-role" style="margin-top:0.25rem;color:#555;"></p>
-            <button id="logout-button" style="display:none;margin-top:1rem;">Logout</button>
             <nav>
                 <ul>
                     <li><a href="#orders">Order History</a></li>
@@ -106,21 +107,14 @@
         <script src="auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            const user = await getCurrentUser();
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
+            const user = await requireAuth();
+            if (!user) return;
             updateNavAuth();
             document.getElementById('account-welcome').textContent = `Welcome, ${user.username}`;
             document.getElementById('account-role').textContent = `Role: ${user.role}`;
-            const logoutButton = document.getElementById('logout-button');
-            logoutButton.style.display = 'inline-block';
-            logoutButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                logoutUser();
-            });
         });
     </script>
+
+</body>
 
 </html>

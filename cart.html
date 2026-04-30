@@ -22,9 +22,11 @@
             <ul>
                 <li><a href="landing.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
-                <li><a href="cart.html" id="current_page">Cart</a></li>
-                <li><a href="account.html">My Account</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
+                <li class="nav-auth"><a href="cart.html" id="current_page">Cart</a></li>
+                <li class="nav-auth"><a href="account.html">My Account</a></li>
+                <li class="nav-guest"><a href="signup.html">Sign Up</a></li>
+                <li class="nav-guest"><a href="login.html">Login</a></li>
+                <li class="nav-auth"><a href="#" id="nav-logout-link" onclick="logoutUser(); return false;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -69,9 +71,13 @@
 
         <script src="auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await requireAuth();
+            if (!user) return;
             updateNavAuth();
         });
     </script>
+
+</body>
 
 </html>

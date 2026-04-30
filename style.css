@@ -545,3 +545,122 @@ article:nth-child(3) { animation-delay: 0.2s; }
 article:nth-child(4) { animation-delay: 0.3s; }
 article:nth-child(5) { animation-delay: 0.4s; }
 article:nth-child(6) { animation-delay: 0.5s; }
+
+/* ── Navbar Auth State Visibility ── */
+/* Before JS runs, hide auth-only items (safe default) */
+.nav-auth { display: none; }
+.nav-guest { display: list-item; }
+
+/* When JS confirms user is logged in */
+body.authenticated .nav-auth { display: list-item; }
+body.authenticated .nav-guest { display: none !important; }
+
+/* When JS confirms user is NOT logged in */
+body.guest .nav-guest { display: list-item; }
+body.guest .nav-auth { display: none !important; }
+
+/* Style the logout nav link */
+#nav-logout-link {
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* ── Select / Dropdown Styling ── */
+select {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background-color: var(--white);
+    transition: border-color 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+}
+
+select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+/* ── Popover Toast Notifications ── */
+#toast-popover {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    max-width: 28rem;
+    margin: 0 auto;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--white);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    border: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    animation: toastSlideIn 0.35s ease-out;
+    white-space: pre-line;
+}
+
+#toast-popover::backdrop {
+    background: transparent;
+}
+
+#toast-popover.toast-error {
+    background-color: #dc3545;
+}
+
+#toast-popover.toast-success {
+    background-color: var(--success-color);
+}
+
+#toast-popover.toast-info {
+    background-color: var(--accent-color);
+}
+
+#toast-message {
+    flex: 1;
+    margin: 0;
+    color: inherit;
+}
+
+#toast-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    box-shadow: none;
+    opacity: 0.8;
+    min-width: auto;
+}
+
+#toast-close:hover {
+    opacity: 1;
+    background: none;
+    box-shadow: none;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
