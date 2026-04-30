@@ -36,12 +36,10 @@
     <main>
         <header>
             <h2 id="account-welcome">Welcome, Guest</h2>
-            <p id="account-role" style="margin-top:0.25rem;color:#555;"></p>
             <nav>
                 <ul>
                     <li><a href="#orders">Order History</a></li>
                     <li><a href="#settings">Profile Settings</a></li>
-                    <li><a href="#wishlist">Wishlist</a></li>
                 </ul>
             </nav>
         </header>
@@ -50,69 +48,82 @@
 
         <section id="orders">
             <h3>Order History</h3>
-            <ul>
-                <li>
-                    <details>
-                        <summary>Order #1001 - January 15, 2026</summary>
-                        <dl>
-                            <dt>Item</dt>
-                            <dd>Apple Airpods Pro 2</dd>
-                            <dt>Quantity</dt>
-                            <dd>1</dd>
-                            <dt>Total</dt>
-                            <dd>₱10,990</dd>
-                            <dt>Status</dt>
-                            <dd>Delivered</dd>
-                        </dl>
-                    </details>
-                </li>
-                <li>
-                    <details>
-                        <summary>Order #1002 - February 3, 2026</summary>
-                        <dl>
-                            <dt>Item</dt>
-                            <dd>Apple Watch (Cherry Ultra Edition)</dd>
-                            <dt>Quantity</dt>
-                            <dd>1</dd>
-                            <dt>Total</dt>
-                            <dd>₱69,420</dd>
-                            <dt>Status</dt>
-                            <dd>Shipped</dd>
-                        </dl>
-                    </details>
-                </li>
-            </ul>
+            <div id="order-list">
+                <p>Loading orders...</p>
+            </div>
         </section>
 
         <hr>
 
         <section id="settings">
             <h3>Profile Settings</h3>
-            <form>
-                <label>Name: <br><input type="text" value="Jols"></label><br><br>
-                <label>Email: <br><input type="email" value="nigg@email.com"></label><br><br>
-                <button type="submit">Save Changes</button>
+            <form id="profile-form">
+                <label>Username: <br><input type="text" id="profile-username" readonly></label><br><br>
+                <label>Role: <br><input type="text" id="profile-role" readonly></label><br><br>
             </form>
         </section>
+    </main>
 
-        <hr>
-
-        <section id="wishlist">
-            <h3>Wishlist</h3>
-            <ul>
-                <li>Macbook ni Kent - ₱25,990</li>
-                <li>JBL Flip 6 - ₱5,499</li>
-            </ul>
-        </section>
-        <script src="auth.js"></script>
+    <script src="auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const user = await requireAuth();
             if (!user) return;
             updateNavAuth();
-            document.getElementById('account-welcome').textContent = `Welcome, ${user.username}`;
-            document.getElementById('account-role').textContent = `Role: ${user.role}`;
+
+            // Welcome header with role badge
+            document.getElementById('account-welcome').innerHTML =
+                `Welcome, ${user.username} <span class="role-badge">${user.role}</span>`;
+
+            // Profile settings — actual credentials
+            document.getElementById('profile-username').value = user.username;
+            document.getElementById('profile-role').value = user.role;
+
+            // Load order history from API
+            loadOrders();
         });
+
+        async function loadOrders() {
+            const orderList = document.getElementById('order-list');
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/orders`, {
+                    credentials: 'include'
+                });
+                if (response.status === 403) {
+                    // Non-admin users can't list all orders — show a message
+                    orderList.innerHTML = '<p>No order history yet. Place an order from your <a href="cart.html">cart</a>!</p>';
+                    return;
+                }
+                if (!response.ok) {
+                    orderList.innerHTML = '<p>No order history yet.</p>';
+                    return;
+                }
+                const orders = await response.json();
+                if (orders.length === 0) {
+                    orderList.innerHTML = '<p>No order history yet. Place an order from your <a href="cart.html">cart</a>!</p>';
+                    return;
+                }
+                orderList.innerHTML = '<ul>' + orders.map(order => `
+                    <li>
+                        <details>
+                            <summary>Order #${order.id} — ${new Date(order.orderDate).toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' })}</summary>
+                            <dl>
+                                <dt>Customer</dt>
+                                <dd>${order.customerName}</dd>
+                                <dt>Email</dt>
+                                <dd>${order.customerEmail}</dd>
+                                <dt>Items</dt>
+                                <dd>${order.orderItems.map(i => `${i.product?.name || 'Product'} × ${i.quantity}`).join(', ')}</dd>
+                                <dt>Total</dt>
+                                <dd>₱${Number(order.totalAmount).toLocaleString('en-PH')}</dd>
+                            </dl>
+                        </details>
+                    </li>
+                `).join('') + '</ul>';
+            } catch (e) {
+                orderList.innerHTML = '<p>No order history yet.</p>';
+            }
+        }
     </script>
 
 </body>

@@ -588,6 +588,75 @@ select:focus {
     outline: none;
 }
 
+/* ── Role Badge ── */
+.role-badge {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* ── Product Actions Row ── */
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ── Cart Item Layout (updated for dynamic rendering) ── */
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.cart-item-actions input[type="number"] {
+    width: 4rem;
+}
+
+.btn-remove {
+    background: none;
+    border: 1px solid var(--warning-color);
+    color: var(--warning-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-remove:hover {
+    background-color: var(--warning-color);
+    color: var(--white);
+    box-shadow: none;
+}
+
+/* ── Empty State Message ── */
+.empty-state {
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 2rem 1rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    background-color: var(--white);
+}
+
 /* ── Popover Toast Notifications ── */
 #toast-popover {
     position: fixed;

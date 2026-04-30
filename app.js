@@ -86,8 +86,18 @@ function renderProducts(products) {
             <p>${product.description || ''}</p>
             <p class="price">${Number(product.price).toLocaleString('en-PH')}</p>
             <p><small>Stock: ${product.stockQuantity} | Category: ${product.category}</small></p>
-            <a href="detail.html?id=${product.id}" class="btn">View Details</a>
+            <div class="product-actions">
+                <a href="detail.html?id=${product.id}" class="btn">View Details</a>
+            </div>
         `;
+
+        // Add to Cart button with proper event binding
+        const addBtn = document.createElement('button');
+        addBtn.className = 'btn add-to-cart-btn';
+        addBtn.textContent = 'Add to Cart';
+        addBtn.addEventListener('click', () => addToCart(product.id));
+        article.querySelector('.product-actions').appendChild(addBtn);
+
         grid.appendChild(article);
     });
 }

@@ -36,45 +36,32 @@
     <main>
         <h2>Cart</h2>
 
-        <ul class="cart-list">
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Airpods">
-                <h3>Apple Airpods Pro 2</h3>
-                <p class="price">10,990</p>
-                <label>Qty: <input type="number" value="1" min="1"></label>
-            </li>
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Apple Watch">
-                <h3>Apple Watch (Cherry Ultra Edition)</h3>
-                <p class="price">69,420</p>
-                <label>Qty: <input type="number" value="1" min="1"></label>
-            </li>
-            <li class="cart-item">
-                <img class="cart_img" src="" alt="Case">
-                <h3>Phone Case</h3>
-                <p class="price">149</p>
-                <label>Qty: <input type="number" value="2" min="1"></label>
-            </li>
-        </ul>
+        <!-- Dynamically populated from the Cart API -->
+        <ul class="cart-list" id="cart-items"></ul>
 
         <hr>
 
-        <section>
+        <section id="cart-summary" style="display:none;">
             <h3>Order Summary</h3>
-            <p>Subtotal: ₱80,708</p>
+            <p>Subtotal: <span id="cart-subtotal">₱0</span></p>
             <p>Shipping: ₱150</p>
-            <p><b>Total: ₱80,858</b></p>
+            <p><b>Total: <span id="cart-total">₱0</span></b></p>
             <a href="checkout.html" class="btn">Proceed to Checkout</a>
         </section>
 
-        <section class="empty-cart"></section>
+        <p class="empty-state" id="empty-cart-msg" style="display:none;">
+            Your cart is empty! <a href="products.html">Browse products</a> to add items.
+        </p>
+    </main>
 
-        <script src="auth.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const user = await requireAuth();
             if (!user) return;
             updateNavAuth();
+            await renderCartPage();
         });
     </script>
 
