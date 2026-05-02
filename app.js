@@ -10,7 +10,7 @@
  */
 
 /** Base URL for the backend API. Change the port if your backend runs elsewhere. */
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = `http://${window.location.hostname}:8080/api/v1`;
 
 /**
  * Fetches all products from the backend API.

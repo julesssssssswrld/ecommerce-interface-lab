@@ -9,7 +9,7 @@
  * @author Jules Ian C. Tomacas
  */
 
-const API_BASE = 'http://localhost:8080';
+const API_BASE = `http://${window.location.hostname}:8080`;
 
 /* ──────────────────────────────────────────────────────────
    CSRF Token Management
@@ -218,6 +218,9 @@ function showToast(message, type = 'error') {
     const toast = document.getElementById('toast-popover');
     const msg = document.getElementById('toast-message');
 
+    // Hide any currently-showing toast first
+    try { toast.hidePopover(); } catch (e) { /* not open */ }
+
     msg.textContent = message;
     toast.className = `toast-${type}`;
     toast.showPopover();
@@ -238,7 +241,14 @@ function showToast(message, type = 'error') {
  */
 async function showResponseError(response, fallback = 'An error occurred. Please try again.') {
     try {
-        const payload = await response.json();
+        const text = await response.text();
+        if (!text || text.trim() === '') {
+            // Empty body — show HTTP status info (e.g. Spring Security 401/403)
+            const statusMsg = `${response.status} ${response.statusText || 'Error'}`;
+            showToast(`${fallback} (${statusMsg})`, 'error');
+            return;
+        }
+        const payload = JSON.parse(text);
         if (payload.errors && Array.isArray(payload.errors)) {
             // Validation errors — show each one
             showToast(payload.errors.join('\n'), 'error');
@@ -250,7 +260,9 @@ async function showResponseError(response, fallback = 'An error occurred. Please
             showToast(fallback, 'error');
         }
     } catch (e) {
-        showToast(fallback, 'error');
+        // Response body wasn't valid JSON — show HTTP status as context
+        const statusMsg = `${response.status} ${response.statusText || 'Error'}`;
+        showToast(`${fallback} (${statusMsg})`, 'error');
     }
 }
 
