@@ -229,7 +229,7 @@ function showToast(message, type = 'error') {
     clearTimeout(toast._hideTimer);
     toast._hideTimer = setTimeout(() => {
         try { toast.hidePopover(); } catch (e) { /* already hidden */ }
-    }, 6000);
+    }, 3000);
 }
 
 /**
