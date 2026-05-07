@@ -3,7 +3,7 @@
  *
  * Provides functions to interact with the server-side cart
  * stored in the database via the Cart REST API. All cart
- * state is persisted per-user session.
+ * state is persisted per-user, authenticated via JWT tokens.
  *
  * @author Jules Ian C. Tomacas
  */
@@ -26,7 +26,6 @@ async function fetchCart() {
  * @param {number} quantity  how many to add (default 1)
  */
 async function addToCart(productId, quantity = 1) {
-    await initCsrf();
     const response = await authFetch(`${CART_API}/items`, {
         method: 'POST',
         body: JSON.stringify({ productId, quantity })
@@ -45,7 +44,6 @@ async function addToCart(productId, quantity = 1) {
  * @param {number} quantity the new quantity
  */
 async function updateCartItem(itemId, quantity) {
-    await initCsrf();
     await authFetch(`${CART_API}/items/${itemId}`, {
         method: 'PATCH',
         body: JSON.stringify({ quantity })
@@ -57,7 +55,6 @@ async function updateCartItem(itemId, quantity) {
  * @param {number} itemId the cart item ID to remove
  */
 async function removeCartItem(itemId) {
-    await initCsrf();
     const response = await authFetch(`${CART_API}/items/${itemId}`, {
         method: 'DELETE'
     });
@@ -71,7 +68,6 @@ async function removeCartItem(itemId) {
  * Clears the entire cart (used after placing an order).
  */
 async function clearCart() {
-    await initCsrf();
     await authFetch(CART_API, { method: 'DELETE' });
 }
 

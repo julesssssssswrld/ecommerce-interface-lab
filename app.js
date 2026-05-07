@@ -26,9 +26,8 @@ const API_BASE_URL = `http://${window.location.hostname}:8080/api/v1`;
  */
 async function fetchProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/products`, {
-            credentials: 'include'
-        });
+        // Products are public — no auth token needed
+        const response = await fetch(`${API_BASE_URL}/products`);
 
         // Check if the response status is in the 200-299 range.
         // Fetch only rejects on network errors, NOT on HTTP errors like 404 or 500.
@@ -104,7 +103,6 @@ function renderProducts(products) {
         wishBtn.textContent = '♡';
         wishBtn.title = 'Add to Wishlist';
         wishBtn.addEventListener('click', async () => {
-            await initCsrf();
             const response = await authFetch(`${API_BASE}/api/v1/wishlist/items`, {
                 method: 'POST',
                 body: JSON.stringify({ productId: product.id })
