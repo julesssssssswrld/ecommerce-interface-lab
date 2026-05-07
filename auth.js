@@ -1,9 +1,9 @@
 /**
- * auth.js — Authentication utilities for NiggsShop
+ * auth.js — JWT Authentication utilities for NiggsShop
  *
- * Handles CSRF token management, session-based login/logout/register,
- * provides an authenticated fetch wrapper, popover-based toast
- * notifications, and dynamic navbar auth state management.
+ * Handles JWT token management, login/logout/register via the REST API,
+ * provides an authenticated fetch wrapper with Bearer token support,
+ * popover-based toast notifications, and dynamic navbar auth state.
  *
  * @author Jovan P. Atencio
  * @author Jules Ian C. Tomacas
@@ -12,70 +12,65 @@
 const API_BASE = `http://${window.location.hostname}:8080`;
 
 /* ──────────────────────────────────────────────────────────
-   CSRF Token Management
+   JWT Token Management (localStorage)
    ────────────────────────────────────────────────────────── */
 
-/** Cached CSRF token fetched from the backend REST endpoint. */
-let _csrfToken = null;
-
 /**
- * Fetches the CSRF token from the backend REST endpoint.
- * This avoids cross-origin cookie issues when the frontend
- * and backend run on different ports.
+ * Stores the JWT token in localStorage.
+ * @param {string} token the JWT token string
  */
-async function initCsrf() {
-    try {
-        const response = await fetch(`${API_BASE}/api/v1/auth/csrf`, {
-            credentials: 'include'
-        });
-        if (response.ok) {
-            const data = await response.json();
-            _csrfToken = data.token;
-        }
-    } catch (e) {
-        console.warn('Could not initialize CSRF token:', e.message);
-    }
+function setToken(token) {
+    localStorage.setItem('jwt_token', token);
 }
 
 /**
- * Returns the cached CSRF token.
- * @returns {string|null} the CSRF token, or null if not yet fetched
+ * Retrieves the stored JWT token.
+ * @returns {string|null} the JWT token, or null if not stored
  */
-function getCsrfToken() {
-    return _csrfToken;
+function getToken() {
+    return localStorage.getItem('jwt_token');
+}
+
+/**
+ * Removes the JWT token from localStorage.
+ */
+function removeToken() {
+    localStorage.removeItem('jwt_token');
 }
 
 /* ──────────────────────────────────────────────────────────
-   Authenticated Fetch Wrapper
+   Authenticated Fetch Wrapper (Bearer Token)
    ────────────────────────────────────────────────────────── */
 
 /**
- * Fetch wrapper that automatically includes credentials and
- * the CSRF token on state-changing requests. Handles 401/403
- * responses by redirecting or showing an access denied toast.
+ * Fetch wrapper that automatically includes the JWT Bearer token
+ * in the Authorization header. Handles 401/403 responses by
+ * redirecting or showing an access denied toast.
  */
 async function authFetch(url, options = {}) {
-    const csrfToken = getCsrfToken();
+    const token = getToken();
     const headers = {
         ...options.headers
     };
 
-    if (options.method && options.method.toUpperCase() !== 'GET') {
-        if (csrfToken) {
-            headers['X-XSRF-TOKEN'] = csrfToken;
-        }
-        if (options.body && !headers['Content-Type']) {
-            headers['Content-Type'] = 'application/json';
-        }
+    // Add Bearer token if available
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    // Set Content-Type for requests with a body
+    if (options.body && !headers['Content-Type']) {
+        headers['Content-Type'] = 'application/json';
     }
 
     const response = await fetch(url, {
         ...options,
-        headers,
-        credentials: 'include'
+        headers
     });
 
     if (response.status === 401) {
+        // Token expired or invalid — clear and redirect to login
+        removeToken();
         window.location.href = 'login.html';
         return response;
     }
@@ -92,66 +87,86 @@ async function authFetch(url, options = {}) {
    Auth Actions — Register, Login, Logout, Current User
    ────────────────────────────────────────────────────────── */
 
+/**
+ * Registers a new user account via the REST API.
+ *
+ * @param {string} username the desired username
+ * @param {string} password the desired password
+ * @param {string} role     the user role (USER, SELLER, ADMIN)
+ * @returns {Promise<Response>} the fetch response
+ */
 async function registerUser(username, password, role) {
-    await initCsrf();
-    const csrfToken = getCsrfToken();
-
     const response = await fetch(`${API_BASE}/api/v1/auth/register`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify({ username, password, role })
     });
 
     return response;
 }
 
+/**
+ * Logs in a user by sending credentials to the JWT login endpoint.
+ * On success, stores the returned JWT token in localStorage.
+ *
+ * @param {string} username the username
+ * @param {string} password the password
+ * @returns {Promise<Response>} the fetch response
+ */
 async function loginUser(username, password) {
-    await initCsrf();
-    const csrfToken = getCsrfToken();
-    const formData = new URLSearchParams();
-    formData.append('username', username);
-    formData.append('password', password);
-
-    const response = await fetch(`${API_BASE}/login`, {
+    const response = await fetch(`${API_BASE}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-XSRF-TOKEN': csrfToken
+            'Content-Type': 'application/json'
         },
-        credentials: 'include',
-        body: formData.toString(),
-        redirect: 'manual'
+        body: JSON.stringify({ username, password })
     });
+
+    if (response.ok) {
+        const data = await response.json();
+        // Store the JWT token from the response
+        setToken(data.token);
+    }
 
     return response;
 }
 
+/**
+ * Logs out the user by clearing the stored JWT token
+ * and redirecting to the login page.
+ *
+ * Since JWT is stateless, there's no server-side session
+ * to invalidate — we just discard the token.
+ */
 async function logoutUser() {
-    await initCsrf();
-    const csrfToken = getCsrfToken();
-
-    await fetch(`${API_BASE}/logout`, {
-        method: 'POST',
-        headers: {
-            'X-XSRF-TOKEN': csrfToken
-        },
-        credentials: 'include'
-    });
-
+    removeToken();
     window.location.href = 'login.html';
 }
 
+/**
+ * Fetches the currently authenticated user's info from the API.
+ * Uses the stored JWT token for authentication.
+ *
+ * @returns {Promise<Object|null>} the user object, or null if not authenticated
+ */
 async function getCurrentUser() {
+    const token = getToken();
+    if (!token) return null;
+
     try {
         const response = await fetch(`${API_BASE}/api/v1/auth/me`, {
-            credentials: 'include'
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
         if (response.ok) {
             return await response.json();
+        }
+        // Token might be expired
+        if (response.status === 401) {
+            removeToken();
         }
         return null;
     } catch (e) {
@@ -225,7 +240,7 @@ function showToast(message, type = 'error') {
     toast.className = `toast-${type}`;
     toast.showPopover();
 
-    // Auto-hide after 6 seconds
+    // Auto-hide after 3 seconds
     clearTimeout(toast._hideTimer);
     toast._hideTimer = setTimeout(() => {
         try { toast.hidePopover(); } catch (e) { /* already hidden */ }
@@ -243,7 +258,7 @@ async function showResponseError(response, fallback = 'An error occurred. Please
     try {
         const text = await response.text();
         if (!text || text.trim() === '') {
-            // Empty body — show HTTP status info (e.g. Spring Security 401/403)
+            // Empty body — show HTTP status info
             const statusMsg = `${response.status} ${response.statusText || 'Error'}`;
             showToast(`${fallback} (${statusMsg})`, 'error');
             return;
@@ -260,7 +275,7 @@ async function showResponseError(response, fallback = 'An error occurred. Please
             showToast(fallback, 'error');
         }
     } catch (e) {
-        // Response body wasn't valid JSON — show HTTP status as context
+        // Response body wasn't valid JSON
         const statusMsg = `${response.status} ${response.statusText || 'Error'}`;
         showToast(`${fallback} (${statusMsg})`, 'error');
     }
